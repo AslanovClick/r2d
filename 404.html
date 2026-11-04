@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Page not found — R2D Partners</title>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Unbounded:wght@200;300;500;600;700&display=swap">
+<!-- absolute paths: Netlify serves this file for any missing URL, at any depth -->
+<link rel="stylesheet" href="/pages.css">
+<style>
+/* 404 shared: full-height stage, text block, actions. Vertical sizes follow the viewport height so art + text + buttons fit one screen */
+.v{position:relative;display:flex;align-items:center;min-height:calc(100dvh - clamp(72px,5.4vw,104px));padding-block:clamp(24px,6vh,110px);overflow:hidden;isolation:isolate}
+.txt{position:relative;display:flex;flex-direction:column;gap:clamp(12px,2.4vh,24px)}
+.txt h1{margin:0;font:700 clamp(28px,min(3.3vw,6.4vh),64px)/1.08 var(--display);text-transform:uppercase;text-wrap:balance}
+.txt h1 em{font-style:normal;color:var(--lime)}
+.txt p{margin:0;max-width:46ch;font:400 clamp(16px,1.15vw,20px)/1.5 var(--body);color:var(--muted)}
+.txt p a{color:inherit;text-decoration:none;white-space:nowrap;transition:color .25s}
+.txt p a:hover{color:var(--lime)}
+.txt p a span{text-decoration:underline;text-underline-offset:3px}
+.act{display:flex;gap:16px;flex-wrap:wrap;margin-top:clamp(0px,1vh,8px)}
+.center{align-items:center;text-align:center}.center .chip-eb{align-self:center}.center .act{justify-content:center}
+@media (max-width:640px){
+  .v{padding-block:clamp(16px,3.5vh,40px)}
+  .txt{align-items:center;text-align:center;gap:clamp(8px,1.8vh,18px)}.txt .chip-eb{align-self:center}
+  .txt h1{font-size:clamp(24px,4vh,30px)}
+  .txt p{font-size:min(15px,3.9vw)}
+  .act{flex-direction:column;align-self:stretch;gap:10px}
+  .act .btn{height:clamp(46px,6.6vh,56px)}
+  .act .btn.arrow{justify-content:space-between;padding-left:28px}
+}
+/* B: crossing marquee ribbons over a giant outlined 404 */
+.vb{flex-direction:column;justify-content:center;gap:clamp(16px,3vh,48px)}
+.stage{position:relative;width:100%;height:clamp(190px,min(40vw,46vh),640px)}
+.ghost404{position:absolute;inset:0;display:grid;place-items:center;margin:0;font:700 clamp(150px,min(36vw,44vh),620px)/1 var(--display);letter-spacing:-.05em;color:var(--bg);-webkit-text-stroke:4px rgba(169,245,16,.6);user-select:none}
+/* same digits on top, fill only: hides the stroke where the font's own contours overlap, leaving just the outer silhouette */
+.ghost404::before{content:attr(data-t);position:absolute;inset:0;display:grid;place-items:center;color:var(--bg);-webkit-text-stroke:0}
+.ghost404::after{content:"";position:absolute;inset:20% 25%;z-index:-1;background:radial-gradient(closest-side,rgba(122,40,255,.6),transparent);filter:blur(50px)}
+/* bands run past both edges of the viewport, whatever the content column width */
+.band{position:absolute;left:calc(50% - 65vw);right:calc(50% - 65vw);top:50%;padding-block:clamp(12px,min(1.4vw,2.4vh),24px);overflow:hidden;box-shadow:0 20px 50px -10px rgba(0,0,0,.5)}
+.band.p{background:#6e09bd;transform:translateY(-50%) rotate(-7deg)}
+.band.l{background:var(--lime);color:#000;transform:translateY(-50%) rotate(5deg)}
+.trk{display:flex;align-items:center;width:max-content;font:700 clamp(20px,min(2.6vw,4.6vh),48px)/1 var(--display);text-transform:uppercase;white-space:nowrap;animation:marq 120s linear infinite}
+/* spacing as padding, not gap, so the two halves are exactly equal and the loop has no jump */
+.trk span,.trk i{margin-right:clamp(28px,2.8vw,56px)}
+/* ring separator: lime outline on the purple band, black on the lime one, hollow inside */
+.trk i{flex:none;box-sizing:border-box;width:.32em;height:.32em;border-radius:50%;border:max(2px,.06em) solid var(--lime)}
+.band.l .trk i{border-color:#000}
+.stage:hover .trk{animation-play-state:paused}
+@keyframes marq{to{transform:translateX(-50%)}}
+@media (max-width:640px){.stage{height:clamp(160px,31vh,270px)}.ghost404{font-size:min(42vw,29vh);-webkit-text-stroke-width:3px}.band.p{transform:translateY(-50%) rotate(-10deg)}.band.l{transform:translateY(-50%) rotate(8deg)}}
+/* B: heading and buttons a step down so the big 404 leads */
+.vb .txt h1{font-size:clamp(22px,min(2.3vw,4.4vh),44px)}
+.vb .btn{padding:14px 24px;font-size:13px}
+.vb .btn.arrow{padding:6px 6px 6px 20px;font-size:14px}
+.vb .btn.arrow span{width:30px;height:30px;font-size:12px}
+@media (max-width:640px){.vb .txt h1{font-size:clamp(20px,3.4vh,26px)}.vb .act .btn{height:clamp(42px,5.8vh,50px)}}
+</style>
+</head>
+<body>
+<div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+<header class="top">
+  <div class="top-in wrap">
+    <a class="logo" href="/" aria-label="R2D Partners home"><img src="/img/logo.png" alt="R2D Partners"></a>
+    <nav aria-label="Main">
+      <a href="/#partners">Exclusive partners</a><a href="/#esports">Esports</a><a href="/#benefits">Advantages</a><a href="/#reviews">Testimonials</a><a href="/#contact">Contacts</a>
+    </nav>
+    <div class="top-act">
+      <a class="login" href="https://r2d.partners/" target="_blank" rel="noopener">Login</a>
+      <a class="signup" href="https://r2d.partners/" target="_blank" rel="noopener">Sign Up</a>
+      <div class="lang-dd">
+        <button class="lang-btn" type="button" id="langBtn" aria-haspopup="listbox" aria-expanded="false"><img class="flag" src="/img/flags/en.svg" alt=""><b id="langCode">EN</b><i>▾</i></button>
+        <ul class="lang-list" id="langList" role="listbox" hidden></ul>
+      </div>
+    </div>
+    <button class="burger" type="button" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mnav"><i></i><i></i><i></i></button>
+  </div>
+  <div class="mnav" id="mnav" hidden>
+    <nav aria-label="Mobile"><a href="/#partners">Exclusive partners</a><a href="/#esports">Esports</a><a href="/#benefits">Advantages</a><a href="/#reviews">Testimonials</a><a href="/#contact">Contacts</a></nav>
+    <div class="mnav-lang"><small>Language</small><div id="mnavLang"></div></div>
+    <div class="mnav-act"><a class="m-signup" href="https://r2d.partners/" target="_blank" rel="noopener">Sign Up</a><a class="m-login" href="https://r2d.partners/" target="_blank" rel="noopener">Login</a></div>
+    <div class="mnav-soc"><img src="/img/soc/mail.svg" alt="Email"><img src="/img/soc/linkedin.svg" alt="LinkedIn"><img src="/img/soc/telegram.svg" alt="Telegram"><img src="/img/soc/instagram.svg" alt="Instagram"></div>
+  </div>
+</header>
+
+<main>
+<section class="v vb wrap">
+  <div class="stage" aria-hidden="true">
+    <p class="ghost404" data-t="404">404</p>
+    <div class="band p"><div class="trk"></div></div>
+    <div class="band l"><div class="trk"></div></div>
+  </div>
+  <div class="txt center">
+    <span class="chip-eb">Error 404</span>
+    <h1>Page <em>not found</em></h1>
+    <p>Are you sure the website URL is correct?<br><a href="/#contact"><span>Get in touch</span> with the site owner</a></p>
+    <div class="act"><a class="btn arrow" href="/">Back to Homepage <span>↗</span></a><a class="btn ghost" href="/#contact">Send a message</a></div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="foot-in wrap">
+    <div class="f-top">
+      <div class="f-brand"><img class="lg" src="/img/logo.png" alt="R2D Partners"><img class="cr" src="/img/crypto.png" alt="Bitcoin and Tether payouts"></div>
+      <nav class="f-nav" aria-label="Footer"><a href="/#partners">Exclusive partners</a><a href="/#benefits">Advantages</a><a href="/#reviews">Testimonials</a><a href="/#contact">Contacts</a></nav>
+      <img class="f-soc" src="/img/social.png" alt="Instagram, Telegram, LinkedIn, Email">
+    </div>
+    <div class="f-bot"><span>© 2026 R2D Partners. All rights reserved</span><div><a href="/#contact">Contact us for special offers</a><a href="/terms.html">Terms &amp; conditions</a></div></div>
+  </div>
+</footer>
+<script src="/pages.js"></script>
+<script>
+// ribbons: repeat the phrase enough to cover the band twice, so the -50% loop is seamless;
+// duration comes from the real track width, so both bands crawl at the same calm speed on any screen
+(()=>{const PX_PER_S=45,s='<span>404</span><i></i><span>Page not found</span><i></i>';
+  const ts=[...document.querySelectorAll('.trk')];ts.forEach(t=>{t.innerHTML=s.repeat(8)+s.repeat(8)});
+  // both start together; the purple band is a fixed share of a phrase ahead, so the two never line up word for word
+  const pace=()=>ts.forEach(t=>{const d=t.scrollWidth/2/PX_PER_S;t.style.animationDuration=d+'s';if(t.closest('.band.p'))t.style.animationDelay=-(d/8*.45)+'s'});
+  (document.fonts?document.fonts.ready:Promise.resolve()).then(pace);
+  let tm;addEventListener('resize',()=>{clearTimeout(tm);tm=setTimeout(pace,200)})})();
+</script>
+</body>
+</html>

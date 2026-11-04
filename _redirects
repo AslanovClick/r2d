@@ -1,0 +1,9 @@
+# Old WordPress terms URLs -> new terms page with the matching language
+/terms            /terms.html          200
+/ru/terms-ru      /terms.html?lang=ru  301
+/br/terms-br      /terms.html?lang=br  301
+/pt/terms-pt      /terms.html?lang=pt  301
+/es/terms-es      /terms.html?lang=es  301
+/fr/terms-fr      /terms.html?lang=fr  301
+/it/terms         /terms.html?lang=it  301
+/de/terms         /terms.html?lang=de  301
