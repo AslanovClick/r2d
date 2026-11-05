@@ -168,13 +168,12 @@ button{font:inherit;color:inherit}
 .mk-brand[aria-pressed="true"] svg{fill:var(--lime)}
 .mk-chips{display:flex;gap:10px;flex-wrap:wrap}
 .gc{min-width:44px;height:44px;padding:0 14px;border-radius:12px;border:1px solid rgba(169,245,16,.75);background:none;color:var(--lime);cursor:pointer;font:300 20px/1 var(--display);transition:all .25s}
-.gc:hover{background:rgba(169,245,16,.12)}
+@media (hover:hover){.gc:hover{background:rgba(169,245,16,.12)}}
 .gc[aria-pressed="true"]{border-color:#fff;color:#fff;font-weight:700;background:rgba(255,255,255,.06)}
 .gc.dim{opacity:.3}
 .globe-wrap{display:flex;flex-direction:column;gap:20px;padding-block:40px;border-bottom:1px solid var(--line)}
 .globe{position:relative;width:100%;overflow:visible;perspective:1400px;padding-block:24px}
-.globe .tilt{position:relative;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.2,.8,.2,1);will-change:transform;cursor:grab;touch-action:pan-y}
-.globe .tilt.drag{transition:none;cursor:grabbing}
+.globe .tilt{position:relative;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.2,.8,.2,1);will-change:transform;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
 .globe .tilt::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(169,245,16,.035) 0 1px,transparent 1px 4px);mix-blend-mode:screen;border-radius:24px}
 .globe .scan{position:absolute;left:0;right:0;height:80px;top:0;pointer-events:none;background:linear-gradient(180deg,transparent,rgba(169,245,16,.05) 80%,rgba(169,245,16,.22) 100%);animation:scan 7s linear infinite}
 .wmap .bgrid{stroke:rgba(169,245,16,.10);stroke-width:.6}
@@ -187,16 +186,19 @@ button{font:inherit;color:inherit}
 .wmap .ext-base path{fill:#3d5c00}
 .wmap .lift path.l{fill:#6f9f0a}
 .wmap .lift path.top{fill:#c8ff3d;stroke:#efffc2;stroke-width:1.2;filter:drop-shadow(0 0 14px rgba(169,245,16,.85)) drop-shadow(0 0 30px rgba(169,245,16,.45))}
-.wmap .lift path.ring{fill:none;stroke:var(--lime);stroke-width:1.2;opacity:.9;transform-box:fill-box;transform-origin:center;animation:ring 1.6s ease-out infinite}
-@keyframes ring{from{transform:scale(1);opacity:.9}to{transform:scale(1.35);opacity:0}}
+.wmap .lift path.ring{fill:none;stroke:var(--lime);stroke-width:1.2;opacity:0;animation:ring 1.6s ease-out 2}
+@keyframes ring{from{stroke-width:1.2;opacity:.9}to{stroke-width:14;opacity:0}}
 .wmap .cty.on{transition:fill .25s,opacity .3s}
-.wmap.focus .cty.on:not(.hi){opacity:.35}
-.wmap.focus .pin:not(.hi) .pin-in{opacity:.35}
+/* active markets: solid lime layer above the lime-dotted country; when one market is in focus the others fade to the dotted look */
+.wmap .on-layer path{fill:var(--lime);stroke:rgba(200,255,90,.95);stroke-width:1.4;paint-order:stroke;transition:opacity .3s}
+.wmap .ext-base{transition:opacity .3s}
+.wmap.focus .on-layer path,.wmap.focus .ext-base{opacity:0}
+.wmap.focus .pin:not(.hi):not(.off) .pin-in{opacity:.55;transform:scale(1)}
 .wmap .lift path.sh{fill:rgba(0,0,0,.55);filter:blur(6px)}
 .wmap{display:block;width:100%;height:auto}
 .wmap .grat{fill:none;stroke:rgba(169,245,16,.08);stroke-width:.6}
 .wmap .cty{fill:url(#dots);stroke:rgba(178,120,255,.55);stroke-width:.5;transition:fill .25s}
-.wmap .cty.on{fill:var(--lime);stroke:#d8ff7a;stroke-width:.8;cursor:pointer;filter:url(#neon)}
+.wmap .cty.on{fill:url(#dotsOn);stroke:#d8ff7a;stroke-width:.8;cursor:pointer;filter:url(#neon)}
 .wmap .cty.hi{fill:#c8ff3d}
 .pin{cursor:pointer;outline:none}
 .pin-in{transform:scale(1.25);transform-box:fill-box;transform-origin:50% 100%;transition:transform .3s cubic-bezier(.3,1.6,.5,1),opacity .3s}
@@ -204,14 +206,15 @@ button{font:inherit;color:inherit}
 .pin-t{font:700 8.5px var(--display);fill:var(--ink);pointer-events:none}
 .pin-dot{fill:var(--ink)}
 .pin-shadow{fill:rgba(0,0,0,.45)}
-.pin:hover .pin-in,.pin:focus-visible .pin-in,.pin.hi .pin-in{transform:scale(1.75)}
+.pin:focus-visible .pin-in,.pin.hi .pin-in{transform:scale(1.5)}
+@media (hover:hover){.pin:hover .pin-in{transform:scale(1.5)}}
 .pin.hi .pin-body{fill:#0b0316;stroke:var(--lime);stroke-width:2}
 .pin.hi .pin-t{fill:var(--lime)}
 .pin.hi .pin-dot{fill:var(--lime)}
-.pin.off .pin-in{opacity:.15;pointer-events:none}
+.pin.off .pin-in{opacity:0;transform:scale(.6);pointer-events:none}
 .pin:focus-visible .pin-body{stroke:#fff;stroke-width:2.4}
 .pin-in.bounce{animation:pinBounce .6s cubic-bezier(.3,1.6,.5,1)}
-@keyframes pinBounce{0%{transform:scale(1.25) translateY(0)}40%{transform:scale(1.75) translateY(-10px)}100%{transform:scale(1.75)}}
+@keyframes pinBounce{0%{transform:scale(1.25) translateY(0)}40%{transform:scale(1.5) translateY(-8px)}100%{transform:scale(1.5)}}
 .globe-tip{position:absolute;z-index:2;pointer-events:none;transform:translate(-50%,calc(-100% - 14px));background:rgba(11,3,22,.85);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.2);border-radius:14px;padding:10px 14px;font:500 13px/1.4 var(--body);white-space:nowrap}
 .globe-tip b{display:block;font:600 15px/1.2 var(--display)}
 .globe-tip span{color:var(--lime)}
@@ -509,7 +512,8 @@ button{font:inherit;color:inherit}
 .mk-brand:hover .mk-n,.mk-brand[aria-pressed=true] .mk-n{color:var(--lime)}
 .mk-chips{gap:8px}
 .gc{min-width:0;height:32px;padding:0 12px;border-radius:100px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.04);color:#fff;font:500 13px/1 var(--display);letter-spacing:.04em}
-.gc:hover{border-color:var(--lime);color:var(--lime);background:rgba(169,245,16,.08)}
+@media (hover:hover){.gc:hover{border-color:var(--lime);color:var(--lime);background:rgba(169,245,16,.08)}}
+.gc.hov{border-color:var(--lime);color:var(--lime);background:rgba(169,245,16,.08)}
 .gc[aria-pressed=true]{background:var(--lime);border-color:var(--lime);color:#000;font-weight:600}
 @media (max-width:960px){#markets .mk-rows{grid-template-columns:1fr}#markets .mk-brand{width:auto}}
 .mk-n{white-space:nowrap}.mk-brand svg{flex-shrink:0}
@@ -521,7 +525,7 @@ button{font:inherit;color:inherit}
 #markets .mk-brand{width:auto;height:34px;padding:0 14px;border-radius:100px;display:flex;align-items:center;gap:4px;color:rgba(255,255,255,.75);font:600 12px/1 var(--display);text-transform:uppercase;letter-spacing:.06em;transition:background .25s,color .25s}
 #markets .mk-brand svg{height:13px;width:auto;max-width:none}#markets .mk-brand.twin svg{height:15px}#markets .mk-brand.slott svg{height:16px}
 #markets .mk-brand sup{font:500 9px/1 var(--display);opacity:.6;margin-top:-8px}
-#markets .mk-brand:hover{color:#fff}
+@media (hover:hover){#markets .mk-brand:hover{color:#fff}}
 #markets .mk-brand[aria-pressed=true]{background:var(--lime);color:#000}#markets .mk-brand[aria-pressed=true] svg{fill:#000}
 @media (max-width:640px){.mk-tabs{width:100%;justify-content:space-between}#markets .mk-brand{height:40px;padding:0 12px}.mk-chips{justify-content:center}}
 /* more air between eyebrow chip and heading, everywhere */
@@ -1558,9 +1562,11 @@ $$('[data-logo]').forEach(el=>{const L=LOGOS[el.dataset.logo];el.setAttribute('v
   const active=c=>c&&GEO[c]&&(brand==='All'||GEO[c].b.includes(brand));
   const rows=$('#mkRows');
   const ALLC=[...new Set(ROWS.flatMap(r=>r[2]))];rows.innerHTML='<div class="mk-bar"><div class="mk-tabs" role="group" aria-label="Brand"><button class="mk-brand all" type="button" data-b="All" aria-pressed="true">All</button>'+ROWS.map(([B,k,list])=>'<button class="mk-brand '+k+'" type="button" data-b="'+B+'" aria-pressed="false" aria-label="Show '+B+' markets"><svg viewBox="'+LOGOS[k].vb+'" fill="currentColor">'+LOGOS[k].d+'</svg><sup>'+list.length+'</sup></button>').join('')+'</div><div class="mk-chips">'+ALLC.map(c=>'<button class="gc" type="button" data-c="'+c+'" aria-pressed="false" title="'+GEO[c].n+'">'+c+'</button>').join('')+'</div></div>';
-  function syncChips(){$$('.gc').forEach(b=>{b.setAttribute('aria-pressed',b.dataset.c===sel||b.dataset.c===hover);b.classList.toggle('dim',!active(b.dataset.c))});$$('.mk-brand').forEach(b=>b.setAttribute('aria-pressed',b.dataset.b===brand))}
-  $$('.mk-brand').forEach(b=>b.onclick=()=>{brand=b.dataset.b==='All'||brand===b.dataset.b?'All':b.dataset.b;if(sel&&!active(sel))sel=null;syncChips();if(window.__mapDraw)window.__mapDraw()});
-  $$('.gc').forEach(b=>{b.onclick=()=>window.__mapSelect&&window.__mapSelect(sel===b.dataset.c?null:b.dataset.c);b.onpointerenter=()=>window.__mapHover&&window.__mapHover(b.dataset.c);b.onpointerleave=()=>window.__mapHover&&window.__mapHover(null)});
+  // hover previews only for a real mouse: on touch, pointerenter/leave fire around every tap and would double-trigger the animation
+  const isMouse=e=>e.pointerType==='mouse';
+  function syncChips(){$$('.gc').forEach(b=>{const c=b.dataset.c;b.setAttribute('aria-pressed',c===sel);b.classList.toggle('hov',c===hover&&c!==sel);b.classList.toggle('dim',!active(c))});$$('.mk-brand').forEach(b=>b.setAttribute('aria-pressed',b.dataset.b===brand))}
+  $$('.mk-brand').forEach(b=>b.onclick=()=>{brand=b.dataset.b==='All'||brand===b.dataset.b?'All':b.dataset.b;if(sel&&!active(sel)){sel=null;$('#globeTip').hidden=true}syncChips();if(window.__mapDraw)window.__mapDraw()});
+  $$('.gc').forEach(b=>{const c=b.dataset.c;b.onclick=()=>window.__mapSelect&&window.__mapSelect(sel===c?null:c,true);b.onpointerenter=e=>isMouse(e)&&window.__mapHover&&window.__mapHover(c);b.onpointerleave=e=>isMouse(e)&&window.__mapHover&&window.__mapHover(null)});
   function card(){syncChips()}
   syncChips();
   // flat interactive map with pins
@@ -1575,6 +1581,7 @@ $$('[data-logo]').forEach(el=>{const L=LOGOS[el.dataset.logo];el.setAttribute('v
   const svg=d3.select(tiltEl).insert('svg','.globe-tip').attr('viewBox',`0 0 ${VW} ${VH}`).attr('class','wmap').attr('role','img').attr('aria-label','World map with R2D markets');
   const defs=svg.append('defs');
   const pat=defs.append('pattern').attr('id','dots').attr('width',5).attr('height',5).attr('patternUnits','userSpaceOnUse');pat.append('rect').attr('width',5).attr('height',5).attr('fill','#1d0b40');pat.append('circle').attr('cx',2.5).attr('cy',2.5).attr('r',.9).attr('fill','rgba(178,120,255,.55)');
+  const patOn=defs.append('pattern').attr('id','dotsOn').attr('width',5).attr('height',5).attr('patternUnits','userSpaceOnUse');patOn.append('rect').attr('width',5).attr('height',5).attr('fill','#1a1236');patOn.append('circle').attr('cx',2.5).attr('cy',2.5).attr('r',1.1).attr('fill','rgba(169,245,16,.75)');
   const nf=defs.append('filter').attr('id','neon').attr('x','-20%').attr('y','-20%').attr('width','140%').attr('height','140%');nf.append('feGaussianBlur').attr('stdDeviation',3).attr('result','b');const fm=nf.append('feMerge');fm.append('feMergeNode').attr('in','b');fm.append('feMergeNode').attr('in','SourceGraphic');
   const gridG=svg.append('g').attr('class','bgridG');for(let x=0;x<=VW;x+=25)gridG.append('line').attr('class','bgrid'+(x%100?'':' major')).attr('x1',x).attr('x2',x).attr('y1',0).attr('y2',VH);for(let y=0;y<=VH;y+=25)gridG.append('line').attr('class','bgrid'+(y%100?'':' major')).attr('x1',0).attr('x2',VW).attr('y1',y).attr('y2',y);
   if(0)svg.append('rect').attr('class','frame').attr('x',1).attr('y',1).attr('width',VW-2).attr('height',VH-2).attr('rx',14);
@@ -1583,9 +1590,14 @@ $$('[data-logo]').forEach(el=>{const L=LOGOS[el.dataset.logo];el.setAttribute('v
   const baseG=svg.append('g').attr('class','ext ext-base');
   const ctys=svg.append('g').selectAll('path').data(land).join('path').attr('d',path)
     .attr('class',d=>'cty'+(byId[d.id]?' geo':'')).attr('data-c',d=>byId[d.id]||null);
+  const onG=svg.append('g').attr('class','ext on-layer');
   const liftG=svg.append('g').attr('class','ext lift');
-  const DEPTH=9;
-  function drawBase(){baseG.selectAll('path').remove();for(const c of Object.keys(feat)){if(!active(c))continue;const d=path(feat[c]);for(let i=3;i>=1;i--)baseG.append('path').attr('d',d).attr('transform','translate(0,'+i+')')}}
+  const DEPTH=9,PIN_HI=1.5;
+  // base rim + solid lime layer depend only on the brand filter, so rebuild them only when it changes
+  let layersFor=null;
+  function drawLayers(){if(layersFor===brand)return;layersFor=brand;const ds=Object.keys(feat).filter(active).map(c=>path(feat[c]));
+    baseG.selectAll('path').remove();onG.selectAll('path').remove();
+    ds.forEach(d=>{for(let i=3;i>=1;i--)baseG.append('path').attr('d',d).attr('transform','translate(0,'+i+')');onG.append('path').attr('d',d)})}
   let liftOf=null;
   function lift(c){if(c===liftOf)return;liftOf=c;liftG.selectAll('*').interrupt().remove();if(!c)return;const d=path(feat[c]);const T=reduce?0:260;
     liftG.append('path').attr('class','sh').attr('d',d).attr('transform','translate(0,3)').style('opacity',0).transition().duration(T).style('opacity',1).attr('transform','translate(4,8)');
@@ -1602,32 +1614,44 @@ $$('[data-logo]').forEach(el=>{const L=LOGOS[el.dataset.logo];el.setAttribute('v
   inner.append('path').attr('class','pin-body').attr('d','M0 0 C-3 -8 -12 -13 -12 -22 A12 12 0 1 1 12 -22 C12 -13 3 -8 0 0Z');
   inner.append('text').attr('class','pin-t').attr('y',-18.5).attr('text-anchor','middle').text(c=>c);
   inner.append('circle').attr('class','pin-dot').attr('cy',-8.5).attr('r',1.6);
-  function px(c){const r=wrap.getBoundingClientRect(),k=r.width/VW,[x,y]=proj(PIN[c]);return [x*k,(y-DEPTH-1)*k-36*1.75*k-8]}
-  function showTip(c){if(!c||!active(c)){tip.hidden=true;return}const g=GEO[c],[x,y]=px(c);tip.innerHTML=`<b>${g.n}</b><span>${g.b.join(' · ')}</span>`;tip.style.left=x+'px';tip.style.top=y+'px';tip.hidden=false}
+  function px(c){const r=wrap.getBoundingClientRect(),k=r.width/VW,[x,y]=proj(PIN[c]);return [x*k,(y-DEPTH-1)*k-36*PIN_HI*k-8]}
+  // tooltip above the pin, kept inside the map horizontally (NZ / AU sit at the very edge)
+  function showTip(c){if(!c||!active(c)){tip.hidden=true;return}const g=GEO[c];let [x,y]=px(c);tip.innerHTML=`<b>${g.n}</b><span>${g.b.join(' · ')}</span>`;tip.hidden=false;
+    const hw=tip.offsetWidth/2+4,W=tiltEl.clientWidth;x=Math.max(hw,Math.min(W-hw,x));tip.style.left=x+'px';tip.style.top=y+'px'}
+  const isHi=c=>active(c)&&(c===hover||c===sel);
   function draw(){
-    drawBase();lift(hover||sel);svg.classed('focus',!!(hover||sel));
-    ctys.classed('on',d=>active(byId[d.id])).classed('hi',d=>{const c=byId[d.id];return !!c&&active(c)&&(c===hover||c===sel)});
-    pins.classed('off',c=>!active(c)).classed('hi',c=>active(c)&&(c===hover||c===sel));
-    pins.filter(c=>c===hover||c===sel).raise();
-    pins.transition().duration(reduce?0:260).ease(d3.easeBackOut.overshoot(1.6)).attr('transform',c=>{const [x,y]=proj(PIN[c]);const up=(c===hover||c===sel)&&active(c)?DEPTH+1:0;return 'translate('+x+','+(y-up)+')'});
+    // hovered or selected market is lifted, the other markets fade to the dotted look
+    const f=active(hover)?hover:active(sel)?sel:null;
+    drawLayers();lift(f);svg.classed('focus',!!f);
+    ctys.classed('on',d=>active(byId[d.id])).classed('hi',d=>isHi(byId[d.id]));
+    pins.classed('off',c=>!active(c)).classed('hi',isHi).attr('tabindex',c=>active(c)?0:-1);
+    pins.filter(isHi).raise();
+    pins.transition().duration(reduce?0:260).ease(d3.easeBackOut.overshoot(1.6)).attr('transform',c=>{const [x,y]=proj(PIN[c]);const up=c===f?DEPTH+1:0;return 'translate('+x+','+(y-up)+')'});
   }
-  function setHover(c){c=active(c)?c:null;if(c===hover)return;hover=c;card(c||sel);showTip(c||null);draw()}
-  function select(c){sel=c&&active(c)?c:null;syncChips();card(sel);draw();if(sel){showTip(sel);pins.filter(x=>x===sel).select('.pin-in').classed('bounce',false).each(function(){void this.getBBox()}).classed('bounce',true)}else tip.hidden=true}
-  ctys.filter('.geo').on('pointerenter',(e,d)=>setHover(byId[d.id])).on('pointerleave',()=>setHover(null)).on('click',(e,d)=>select(byId[d.id]===sel?null:byId[d.id]));
-  pins.on('pointerenter',(e,c)=>setHover(c)).on('pointerleave',()=>setHover(null)).on('click',(e,c)=>select(c===sel?null:c))
+  // phone: the map is wider than the screen, so a chip tap scrolls its pin into the middle
+  const gw=wrap.closest('.globe-wrap');
+  function panTo(c){if(!gw||gw.scrollWidth<=gw.clientWidth+1||!/auto|scroll/.test(getComputedStyle(gw).overflowX))return;const wr=wrap.getBoundingClientRect(),k=wr.width/VW,left=wr.left-gw.getBoundingClientRect().left+gw.scrollLeft;
+    gw.scrollTo({left:left+proj(PIN[c])[0]*k-gw.clientWidth/2,behavior:reduce?'auto':'smooth'})}
+  function setHover(c){c=active(c)?c:null;if(c===hover)return;hover=c;card();showTip(c||sel);draw()}
+  // hover-out lands after a short delay, so country -> its pin, a border or a 1px gap
+  // doesn't reset the map in between (that reset restarted the lift and flashed the map)
+  let outT=0;
+  const hoverIn=c=>{clearTimeout(outT);setHover(c)},hoverOut=()=>{clearTimeout(outT);outT=setTimeout(()=>setHover(null),120)};
+  function select(c,pan){sel=c&&active(c)?c:null;syncChips();draw();showTip(sel||hover);if(sel){if(pan)panTo(sel);pins.filter(x=>x===sel).select('.pin-in').classed('bounce',false).each(function(){void this.getBBox()}).classed('bounce',true)}}
+  ctys.filter('.geo').on('pointerenter',(e,d)=>isMouse(e)&&hoverIn(byId[d.id])).on('pointerleave',e=>isMouse(e)&&hoverOut()).on('click',(e,d)=>select(byId[d.id]===sel?null:byId[d.id]));
+  pins.on('pointerenter',(e,c)=>isMouse(e)&&hoverIn(c)).on('pointerleave',e=>isMouse(e)&&hoverOut()).on('click',(e,c)=>select(c===sel?null:c))
     .on('keydown',(e,c)=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();select(c===sel?null:c)}});
-  svg.on('pointerleave',()=>{setHover(null);if(sel)showTip(sel)});
+  // click / tap on the sea or a non-market country clears the selection (touch has no hover-out)
+  svg.on('pointerleave',e=>isMouse(e)&&hoverOut()).on('click',e=>{if(!e.target.closest('.pin,.cty.geo'))select(null)});
   window.addEventListener('resize',()=>{if(sel)showTip(sel)});
-  // slight 3D tilt: follows pointer, drag to rotate more
-  let rx=8,ry=0,drg=null;let tq=0;const setT=()=>{if(tq)return;tq=requestAnimationFrame(()=>{tq=0;tiltEl.style.transform='rotateX('+rx+'deg) rotateY('+ry+'deg)'})};setT();
-  if(!reduce){wrap.addEventListener('pointermove',e=>{const r=wrap.getBoundingClientRect();if(drg){ry=Math.max(-22,Math.min(22,drg.ry+(e.clientX-drg.x)/12));rx=Math.max(-6,Math.min(24,drg.rx-(e.clientY-drg.y)/12));setT();return}
-      const px=(e.clientX-r.left)/r.width-.5,py=(e.clientY-r.top)/r.height-.5;ry=px*10;rx=8-py*8;setT()});
-    wrap.addEventListener('pointerdown',e=>{if(e.target.closest('.pin,.cty.on'))return;drg={x:e.clientX,y:e.clientY,rx,ry};tiltEl.classList.add('drag')});
-    window.addEventListener('pointerup',()=>{if(drg){drg=null;tiltEl.classList.remove('drag')}});
-    wrap.addEventListener('pointerleave',()=>{if(!drg){rx=8;ry=0;setT()}})}
+  // gentle 3D tilt that follows the mouse, desktop only. No drag-to-rotate; touch screens get a flat map.
+  let rx=8,ry=0,tq=0;const setT=()=>{if(tq)return;tq=requestAnimationFrame(()=>{tq=0;tiltEl.style.transform='rotateX('+rx+'deg) rotateY('+ry+'deg)'})};
+  if(matchMedia('(hover:hover) and (pointer:fine)').matches){setT();
+    if(!reduce){wrap.addEventListener('pointermove',e=>{if(!isMouse(e))return;const r=wrap.getBoundingClientRect();ry=((e.clientX-r.left)/r.width-.5)*6;rx=8-((e.clientY-r.top)/r.height-.5)*4;setT()});
+      wrap.addEventListener('pointerleave',()=>{rx=8;ry=0;setT()})}}
   draw();
 
-  window.__mapDraw=draw;window.__mapSelect=select;window.__mapHover=setHover;
+  window.__mapDraw=draw;window.__mapSelect=select;window.__mapHover=c=>c?hoverIn(c):hoverOut();
 })();
 // contacts copy + form
 (function(){const msg=$('#copyMsg');const copy=t=>{const done=()=>{msg.textContent='Copied: '+t;setTimeout(()=>msg.textContent='',2200)};try{navigator.clipboard.writeText(t).then(done,()=>{msg.textContent=t})}catch(e){msg.textContent=t}};
@@ -1652,7 +1676,5 @@ document.querySelectorAll('.prt,.ben').forEach(c=>{c.addEventListener('pointermo
 // mobile menu
 (()=>{const b=document.getElementById('burger'),m=document.getElementById('mnav');const dd=document.querySelector('.lang-dd'),home=dd.parentElement,slot=document.getElementById('mnavLang'),mq=matchMedia('(max-width:640px)');const place=()=>{(mq.matches?slot:home).appendChild(dd)};place();mq.addEventListener('change',place);const hdr=document.querySelector('.top');const setH=()=>document.documentElement.style.setProperty('--hh',hdr.getBoundingClientRect().bottom+'px');addEventListener('resize',setH);const set=o=>{setH();b.setAttribute('aria-expanded',o);b.setAttribute('aria-label',o?'Close menu':'Open menu');m.hidden=!o;document.body.classList.toggle('menu-open',o);if(o)m.style.height=''};b.onclick=()=>set(m.hidden);m.addEventListener('click',e=>{if(e.target.closest('a'))set(false)});addEventListener('keydown',e=>{if(e.key==='Escape')set(false)})})();
 // mobile: map is wider than the screen, start centred on Europe
-if(matchMedia('(max-width:640px)').matches){const gw=document.querySelector('.globe-wrap');if(gw){requestAnimationFrame(()=>{gw.scrollLeft=(gw.scrollWidth-gw.clientWidth)*.5});
-  /* tapping a country chip pans the map to its pin */
-  document.getElementById('mkRows').addEventListener('click',e=>{const c=e.target.closest('.gc');if(!c)return;setTimeout(()=>{const p=document.querySelector('.pin[data-c="'+c.dataset.c+'"]');if(!p)return;const pr=p.getBoundingClientRect(),gr=gw.getBoundingClientRect();gw.scrollTo({left:gw.scrollLeft+pr.left+pr.width/2-gr.left-gr.width/2,behavior:'smooth'})},50)})}}
+if(matchMedia('(max-width:640px)').matches){const gw=document.querySelector('.globe-wrap');if(gw)requestAnimationFrame(()=>{gw.scrollLeft=(gw.scrollWidth-gw.clientWidth)*.5})}
 </script>
