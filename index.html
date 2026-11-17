@@ -281,9 +281,8 @@ button{font:inherit;color:inherit}
 .ct-list{list-style:none;margin:0;padding:0;border-top:1px solid rgba(255,255,255,.14)}
 .ct-list li{display:flex;flex-direction:column;gap:10px;padding:32px 0;border-bottom:1px solid rgba(255,255,255,.14)}
 .ct-list small{font:500 clamp(14px,.95vw,18px)/1.3 var(--display);text-transform:uppercase;letter-spacing:.04em;color:rgba(255,255,255,.55)}
-.ct-list button{align-self:flex-start;background:none;border:0;padding:0;cursor:copy;color:var(--lime);font:500 clamp(20px,1.4vw,26px)/1.1 var(--display);text-align:left;word-break:break-word;background-image:linear-gradient(var(--lime),var(--lime));background-size:0 2px;background-repeat:no-repeat;background-position:0 100%;transition:background-size .35s}
-.ct-list button:hover,.ct-list button:focus-visible{background-size:100% 2px;outline:none}
-.copy-msg{display:block;min-height:1.2em;margin-top:12px;font:500 14px/1.2 var(--body);color:var(--lime)}
+.ct-list a{align-self:flex-start;background:none;border:0;padding:0;cursor:pointer;text-decoration:none;color:var(--lime);font:500 clamp(20px,1.4vw,26px)/1.1 var(--display);text-align:left;word-break:break-word;background-image:linear-gradient(var(--lime),var(--lime));background-size:0 2px;background-repeat:no-repeat;background-position:0 100%;transition:background-size .35s}
+.ct-list a:hover,.ct-list a:focus-visible{background-size:100% 2px;outline:none}
 .form{position:relative;z-index:1;display:flex;flex-direction:column;gap:28px;padding:40px;border-radius:32px}
 .f-l{font:500 15px/1.2 var(--display);text-transform:uppercase;letter-spacing:.04em;color:rgba(255,255,255,.55)}
 .topics{display:flex;flex-direction:column;gap:14px}
@@ -312,7 +311,10 @@ button{font:inherit;color:inherit}
 .f-nav{display:flex;gap:40px;flex-wrap:wrap}
 .f-nav a{text-decoration:none;font:500 16px/1 var(--body);opacity:.9}
 .f-nav a:hover{color:var(--lime);opacity:1}
-.f-soc{height:40px;width:auto}
+.f-soc{height:40px;width:auto;display:flex;gap:10px}
+.f-soc a,.mnav-soc a{display:block;border-radius:50%;transition:transform .25s}
+.f-soc a{height:100%}.f-soc img{display:block;height:100%;width:auto}
+@media (hover:hover){.f-soc a:hover,.mnav-soc a:hover{transform:translateY(-3px)}}
 .f-bot{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;padding-top:28px;border-top:1px solid rgba(255,255,255,.2);font:400 14px/1.3 var(--body);color:rgba(255,255,255,.6)}
 .f-bot div{display:flex;gap:32px}.f-bot a{text-decoration:none;color:rgba(255,255,255,.85)}
 /* motion */
@@ -431,7 +433,7 @@ button{font:inherit;color:inherit}
   .field textarea{min-height:120px;padding:18px 24px;font-size:15px}
   .f-foot small{font-size:15px}
   .btn.arrow{font-size:15px}
-  .ct-list small{font-size:18px}.ct-list button{font-size:26px}
+  .ct-list small{font-size:18px}.ct-list a{font-size:26px}
 }
 /* ribbon logo proportions as in previous version */
 .ribbon .mlogo{height:clamp(19px,2.25vw,35px)}
@@ -637,7 +639,7 @@ button{font:inherit;color:inherit}
   /* contact */
   .ct-list li{padding:20px 0;gap:6px}
   .ct-list small{font-size:13px!important}
-  .ct-list button{font-size:20px!important;padding:8px 0;min-height:44px}
+  .ct-list a{font-size:20px!important;padding:8px 0;min-height:44px}
   .form,.form.glass{padding:22px 18px}
   .form .topic{padding:11px 14px}
   .form .field input{height:48px;font-size:16px}
@@ -763,10 +765,10 @@ button{font:inherit;color:inherit}
   .hero-chip{flex-wrap:wrap;justify-content:center;text-align:center;padding:9px 20px;border-radius:24px;line-height:1.2;gap:3px 0}
   .hero-chip::before{display:none}
   .hero-chip>span{display:block;width:100%}
-  /* offers per Figma 3:24: 2 + 1 wide, centred */
+  /* offers: 2 + 1 wide, same order as on desktop (CPA, RevShare, Hybrid) */
   .offers{grid-template-columns:1fr 1fr!important;gap:10px}
   .offer{height:92px;padding:0 8px;border-radius:26px;align-items:center;justify-content:center;text-align:center;gap:6px}
-  .offer:nth-child(3){order:2;grid-column:auto}.offer:nth-child(2){order:3;grid-column:1/-1}
+  .offer:nth-child(3){grid-column:1/-1}
   .offer b{font-size:19px!important;font-weight:800}
   .offer span{font:500 14px/1 var(--display)!important;text-transform:uppercase;color:#fff}
   /* 18: bigger, lower, ribbon overlaps its bottom 20% */
@@ -1071,18 +1073,17 @@ html,body{overflow-x:clip}
 /* hero video: black background blends into the page */
 video.hero-art{display:block;height:auto;mix-blend-mode:screen;pointer-events:none}
 .hero{isolation:auto!important}
-/* tablet: event cards in one row */
+/* tablet: event cards 3 per row (2 on narrow tablets), the last row centred */
 @media (min-width:641px) and (max-width:1340px){
-  .ev-grid{flex-wrap:nowrap!important;gap:16px!important}
-  .ev.glass{flex:1 1 0!important;width:auto!important;min-width:0;height:auto!important;min-height:clamp(250px,30vw,343px);padding:clamp(20px,2.6vw,40px)!important;border-radius:clamp(22px,2.6vw,32px)!important}
+  .ev-grid{flex-wrap:wrap!important;gap:16px!important}
+  .ev.glass{flex:0 0 calc((100% - 32px)/3)!important;width:auto!important;min-width:0;height:auto!important;min-height:clamp(250px,30vw,343px);padding:clamp(20px,2.6vw,40px)!important;border-radius:clamp(22px,2.6vw,32px)!important}
   .ev .d{font-size:clamp(13px,1.4vw,18px)!important;padding:clamp(6px,.8vw,10px) clamp(12px,1.4vw,18px)!important}
   .ev h3{font-size:clamp(17px,2.4vw,32px)!important}
   .ev .loc{font-size:clamp(13px,1.6vw,24px)!important}
   .ev .loc svg{width:clamp(18px,2vw,28px)!important;height:clamp(18px,2vw,28px)!important}
 }
 
-/* tablet: SBC Summit on two lines like its neighbours */
-@media (min-width:641px) and (max-width:1340px){.ev:nth-child(3) h3{width:min-content}}
+@media (min-width:641px) and (max-width:900px){.ev.glass{flex-basis:calc((100% - 16px)/2)!important}}
 
 /* brand tabs: optically equal logo sizes */
 #markets .mk-brand.leon svg{height:11px!important}#markets .mk-brand.twin svg{height:13.5px!important}#markets .mk-brand.slott svg{height:15px!important}
@@ -1097,8 +1098,15 @@ video.hero-art{display:block;height:auto;mix-blend-mode:screen;pointer-events:no
   .hero::after{content:'';position:absolute;z-index:0;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(11,3,22,.55) 0%,rgba(11,3,22,.25) 35%,rgba(11,3,22,0) 60%);-webkit-mask-image:linear-gradient(180deg,#000 70%,transparent);mask-image:linear-gradient(180deg,#000 70%,transparent)}
 }
 
-/* events: always one row from 641px up; cards shrink a little instead of wrapping */
-@media (min-width:641px){.ev-grid{flex-wrap:nowrap!important}.ev.glass{flex:0 1 418px;min-width:0}}
+/* events: 3 cards per row from 641px up, the last row centred */
+@media (min-width:641px){.ev-grid{flex-wrap:wrap!important;justify-content:center}.ev.glass{flex:0 1 calc((100% - 48px)/3);max-width:418px;min-width:0}
+  /* room for a two-line city ("Cape Town, South Africa"), so the divider lines up across a row */
+  .ev .loc{min-height:2.45em}}
+/* events: the whole card opens the event site (link on the title, stretched over the card, above the city line) */
+.ev{position:relative}
+.ev h3 a{color:inherit;text-decoration:none}
+.ev h3 a::after{content:'';position:absolute;inset:0;z-index:1;border-radius:30px}
+.ev h3 a:focus-visible{outline:none}.ev h3 a:focus-visible::after{outline:2px solid var(--lime);outline-offset:-2px}
 
 /* brand tabs: Slott aligned by its letters (dot ignored), LEON -3%, Slott +5% */
 #markets .mk-brand.leon svg{height:10.67px!important}#markets .mk-brand.slott svg{height:15.75px!important;transform:translateY(13%)}
@@ -1290,8 +1298,12 @@ html .caps .cap:first-child .c{align-items:flex-start!important;text-align:left!
 @media (max-width:960px){.ben::after{filter:none!important;mix-blend-mode:normal!important;width:90%!important;height:200px!important;top:-20px!important;opacity:1!important;background:radial-gradient(closest-side,rgba(150,80,255,.22),rgba(150,80,255,0))!important}.ben:nth-child(odd)::after{background:radial-gradient(closest-side,rgba(190,255,60,.15),rgba(190,255,60,0))!important}}
 /* phones: backdrop blur on benefit cards drew a hard band where the icon overlaps — not needed on a dark solid page */
 @media (max-width:960px){.ben.glass{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}}
-/* the promo video loads lazily: keep its 16:9 box before the poster and video arrive */
-.mat video{aspect-ratio:16/9}
+/* the promo video loads lazily: keep its 16:9 box before the poster and video arrive (and for the still image in light mode) */
+.mat video,.mat img{aspect-ratio:16/9}.mat img{object-fit:cover}
+/* taps on phones: don't wait to see whether it is a double-tap zoom */
+a,button{touch-action:manipulation}
+/* reviews: keep the long card strip on its own layer, so a slide starts at once instead of first preparing the layer */
+.rv-track{will-change:transform}
 </style>
 </head>
 <body>
@@ -1317,7 +1329,7 @@ html .caps .cap:first-child .c{align-items:flex-start!important;text-align:left!
     <nav aria-label="Mobile"><a href="#partners">Exclusive partners</a><a href="#esports">Esports</a><a href="#benefits">Advantages</a><a href="#reviews">Testimonials</a><a href="#contact">Contacts</a></nav>
     <div class="mnav-lang"><small>Language</small><div id="mnavLang"></div></div>
     <div class="mnav-act"><a class="m-signup" href="https://r2d.partners/" target="_blank" rel="noopener">Sign Up</a><a class="m-login" href="https://r2d.partners/" target="_blank" rel="noopener">Login</a></div>
-    <div class="mnav-soc"><img src="img/soc/mail.svg" alt="Email"><img src="img/soc/linkedin.svg" alt="LinkedIn"><img src="img/soc/telegram.svg" alt="Telegram"><img src="img/soc/instagram.svg" alt="Instagram"></div>
+    <div class="mnav-soc"><a href="mailto:affiliates@r2d.partners" aria-label="Email"><img src="img/soc/mail.svg" alt=""></a><a href="https://www.linkedin.com/company/r2d-partners/" target="_blank" rel="noopener" aria-label="LinkedIn"><img src="img/soc/linkedin.svg" alt=""></a><a href="https://t.me/r2d_partners_eng" target="_blank" rel="noopener" aria-label="Telegram"><img src="img/soc/telegram.svg" alt=""></a><a href="https://instagram.com/r2d_prtnrs" target="_blank" rel="noopener" aria-label="Instagram"><img src="img/soc/instagram.svg" alt=""></a></div>
   </div>
 </header>
 
@@ -1431,7 +1443,7 @@ html .caps .cap:first-child .c{align-items:flex-start!important;text-align:left!
 <section class="sec" id="materials">
   <div class="wrap">
     <div class="head center" style="margin-bottom:40px"><span class="chip-eb">Promo kit</span><h2 class="h2"><em>Advertising</em> materials</h2></div>
-    <div class="mat reveal"><video id="matVideo" data-poster="img/materials-poster.webp" muted loop playsinline preload="none" aria-label="Promo creative for LEON: monkey in a jungle with a prize wheel"><source media="(max-width:640px)" data-src="img/materials-m-av1.mp4" type='video/mp4; codecs="av01.0.01M.08"'><source media="(max-width:640px)" data-src="img/materials-m-hevc.mp4" type='video/mp4; codecs="hvc1.1.6.L63.90"'><source media="(max-width:640px)" data-src="img/materials-m.mp4" type="video/mp4"><source data-src="img/materials-av1.mp4" type='video/mp4; codecs="av01.0.05M.08"'><source data-src="img/materials-hevc.mp4" type='video/mp4; codecs="hvc1.1.6.L93.90"'><source data-src="img/materials.mp4" type="video/mp4"></video></div>
+    <div class="mat reveal"><video id="matVideo" data-poster="img/materials-poster.webp" muted loop playsinline preload="none" aria-label="Promo creative for LEON: monkey in a jungle with a prize wheel"><source data-src="img/materials-av1.mp4" type='video/mp4; codecs="av01.0.05M.08"'><source data-src="img/materials-hevc.mp4" type='video/mp4; codecs="hvc1.1.6.L93.90"'><source data-src="img/materials.mp4" type="video/mp4"></video></div>
   </div>
 </section>
 
@@ -1441,9 +1453,11 @@ html .caps .cap:first-child .c{align-items:flex-start!important;text-align:left!
   <div class="wrap">
     <div class="head center"><span class="chip-eb">Events</span><h2 class="h2"><em>Meet</em> our managers at</h2><p>Upcoming events</p></div>
     <div class="ev-grid stag">
-      <article class="ev glass"><span class="d">01–03.09</span><h3>Sigma North America</h3><span class="loc"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M6 0C2.7 0 0 2.6 0 5.9 0 10.3 6 16 6 16s6-5.7 6-10.1C12 2.6 9.3 0 6 0Zm0 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z"/></svg>Mexico City, Mexico</span></article>
-      <article class="ev glass"><span class="d">07–08.09</span><h3>Affiliate World Americas</h3><span class="loc"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M6 0C2.7 0 0 2.6 0 5.9 0 10.3 6 16 6 16s6-5.7 6-10.1C12 2.6 9.3 0 6 0Zm0 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z"/></svg>Cancun, Mexico</span></article>
-      <article class="ev glass"><span class="d">28.09–01.10</span><h3>SBC Summit</h3><span class="loc"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M6 0C2.7 0 0 2.6 0 5.9 0 10.3 6 16 6 16s6-5.7 6-10.1C12 2.6 9.3 0 6 0Zm0 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z"/></svg>Lisbon, Portugal</span></article>
+      <article class="ev glass"><span class="d">19–20.01</span><h3><a href="https://barcelona.igbaffiliate.com/exhibitor-list/floorplan" target="_blank" rel="noopener">iGB Affiliates</a></h3><span class="loc"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M6 0C2.7 0 0 2.6 0 5.9 0 10.3 6 16 6 16s6-5.7 6-10.1C12 2.6 9.3 0 6 0Zm0 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z"/></svg>Barcelona, Spain</span></article>
+      <article class="ev glass"><span class="d">15–17.02</span><h3><a href="https://sigma.world/summits/africa/" target="_blank" rel="noopener">SiGMA Africa</a></h3><span class="loc"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M6 0C2.7 0 0 2.6 0 5.9 0 10.3 6 16 6 16s6-5.7 6-10.1C12 2.6 9.3 0 6 0Zm0 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z"/></svg>Cape Town, South Africa</span></article>
+      <article class="ev glass"><span class="d">24–25.03</span><h3><a href="https://www.conversion-conf.com/warsaw-2027-affiliate-conference" target="_blank" rel="noopener">Conversion Conf</a></h3><span class="loc"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M6 0C2.7 0 0 2.6 0 5.9 0 10.3 6 16 6 16s6-5.7 6-10.1C12 2.6 9.3 0 6 0Zm0 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z"/></svg>Warsaw, Poland</span></article>
+      <article class="ev glass"><span class="d">19–21.04</span><h3><a href="https://sbcevents.com/sbc-summit-europe/" target="_blank" rel="noopener">SBC Summit Europe</a></h3><span class="loc"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M6 0C2.7 0 0 2.6 0 5.9 0 10.3 6 16 6 16s6-5.7 6-10.1C12 2.6 9.3 0 6 0Zm0 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z"/></svg>Amsterdam, The Netherlands</span></article>
+      <article class="ev glass"><span class="d">17–19.05</span><h3><a href="https://yerevan.affiliateconf.com/" target="_blank" rel="noopener">MAC 2027</a></h3><span class="loc"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M6 0C2.7 0 0 2.6 0 5.9 0 10.3 6 16 6 16s6-5.7 6-10.1C12 2.6 9.3 0 6 0Zm0 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z"/></svg>Yerevan, Armenia</span></article>
     </div>
   </div>
 </section>
@@ -1458,11 +1472,10 @@ html .caps .cap:first-child .c{align-items:flex-start!important;text-align:left!
     <div class="ct-body">
       <div>
         <ul class="ct-list">
-          <li><small>Media buying · Influence · Social</small><button type="button" data-copy="digital@r2d.partners">digital@r2d.partners</button></li>
-          <li><small>Affiliate managers</small><button type="button" data-copy="affiliates@r2d.partners">affiliates@r2d.partners</button></li>
-          <li><small>Telegram</small><button type="button" data-copy="@R2D_affiliates">@R2D_affiliates</button></li>
+          <li><small>Media buying · Influence · Social</small><a href="mailto:digital@r2d.partners">digital@r2d.partners</a></li>
+          <li><small>Affiliate managers</small><a href="mailto:affiliates@r2d.partners">affiliates@r2d.partners</a></li>
+          <li><small>Telegram</small><a href="https://t.me/R2D_affiliates" target="_blank" rel="noopener">@R2D_affiliates</a></li>
         </ul>
-        <span class="copy-msg" id="copyMsg" aria-live="polite"></span>
       </div>
       <form class="form glass" id="ctForm" novalidate>
         <div class="topics"><span class="f-l">I'm interested in</span>
@@ -1489,9 +1502,9 @@ html .caps .cap:first-child .c{align-items:flex-start!important;text-align:left!
     <div class="f-top">
       <div class="f-brand"><img class="lg" src="img/logo.png" alt="R2D Partners" loading="lazy" decoding="async"><img class="cr" src="img/crypto.png" alt="Bitcoin and Tether payouts" loading="lazy" decoding="async"></div>
       <nav class="f-nav" aria-label="Footer"><a href="#partners">Exclusive partners</a><a href="#benefits">Advantages</a><a href="#reviews">Testimonials</a><a href="#contact">Contacts</a></nav>
-      <img class="f-soc" src="img/social.png" alt="Instagram, Telegram, LinkedIn, Email" loading="lazy" decoding="async">
+      <div class="f-soc"><a href="https://instagram.com/r2d_prtnrs" target="_blank" rel="noopener" aria-label="Instagram"><img src="img/soc/instagram.svg" alt="" loading="lazy" decoding="async"></a><a href="https://t.me/r2d_partners_eng" target="_blank" rel="noopener" aria-label="Telegram"><img src="img/soc/telegram.svg" alt="" loading="lazy" decoding="async"></a><a href="https://www.linkedin.com/company/r2d-partners/" target="_blank" rel="noopener" aria-label="LinkedIn"><img src="img/soc/linkedin.svg" alt="" loading="lazy" decoding="async"></a><a href="mailto:affiliates@r2d.partners" aria-label="Email"><img src="img/soc/mail.svg" alt="" loading="lazy" decoding="async"></a></div>
     </div>
-    <div class="f-bot"><span>© 2026 R2D Partners. All rights reserved</span><div><a href="#contact">Contact us for special offers</a><a href="terms.html">Terms &amp; conditions</a></div></div>
+    <div class="f-bot"><span>© 2026 R2D Partners. All rights reserved</span><div><a href="#contact">Contact us for special offers</a><a href="terms.html" target="_blank">Terms &amp; conditions</a></div></div>
   </div>
 </footer>
 
@@ -1545,8 +1558,11 @@ $$('[data-logo]').forEach(el=>{const L=LOGOS[el.dataset.logo];el.setAttribute('v
   const logoIO=new IntersectionObserver(es=>{if(!es.some(e=>e.isIntersecting))return;logoIO.disconnect();tr.querySelectorAll('img[loading="lazy"]').forEach(i=>{i.loading='eager'})},{rootMargin:'600px 0px'});logoIO.observe(tr);
   const cards=[...tr.children];const G=()=>parseFloat(getComputedStyle(tr).columnGap)||24;const step=()=>cards[0].getBoundingClientRect().width+G();const cOff=()=>matchMedia("(max-width:640px)").matches?(document.documentElement.clientWidth-cards[0].getBoundingClientRect().width)/2-tr.parentElement.getBoundingClientRect().left:0;
   const per=()=>{const x0=tr.getBoundingClientRect().left-(new DOMMatrix(getComputedStyle(tr).transform).m41||0);return Math.max(1,Math.floor((document.documentElement.clientWidth-x0+G())/step()))};
-  function show(n){const max=Math.max(0,R.length-per());k=n<0?max:n>max?0:n;tr.style.transition='';tr.style.transform='translateX('+(-k*step()+cOff())+'px)';
-    const vw=document.documentElement.clientWidth,x0=tr.parentElement.getBoundingClientRect().left;cards.forEach((c,i)=>{const x=x0+(i-k)*step();c.classList.toggle('dim',!(x>=-1&&x+c.offsetWidth<=vw+1))});const p=per(),f=n=>String(n).padStart(2,'0');$('#rvFrom').textContent=p>1?f(k+1)+'–'+f(Math.min(R.length,k+p)):f(k+1);$('#rvTot').textContent=R.length;const b=$('#rvBar');b.style.left=(k/R.length*100)+'%';b.style.width=(Math.min(p,R.length)/R.length*100)+'%'}
+  function show(n){const p=per(),max=Math.max(0,R.length-p);k=n<0?max:n>max?0:n;
+    // read all geometry first, then write: reading sizes after each class change forced up to 54 relayouts per tap
+    const st=step(),off=cOff(),vw=document.documentElement.clientWidth,x0=tr.parentElement.getBoundingClientRect().left,cw=cards[0].offsetWidth;
+    tr.style.transition='';tr.style.transform='translateX('+(-k*st+off)+'px)';
+    cards.forEach((c,i)=>{const x=x0+(i-k)*st;c.classList.toggle('dim',!(x>=-1&&x+cw<=vw+1))});const f=n=>String(n).padStart(2,'0');$('#rvFrom').textContent=p>1?f(k+1)+'–'+f(Math.min(R.length,k+p)):f(k+1);$('#rvTot').textContent=R.length;const b=$('#rvBar');b.style.left=(k/R.length*100)+'%';b.style.width=(Math.min(p,R.length)/R.length*100)+'%'}
   $('#rvNext').onclick=()=>{show(k+1);auto()};$('#rvPrev').onclick=()=>{show(k-1);auto()};
   let timer=null;const auto=()=>{clearInterval(timer);if(!reduce)timer=setInterval(()=>show(k+1),7000)};
   $('#reviews').addEventListener('pointerenter',()=>clearInterval(timer));$('#reviews').addEventListener('pointerleave',auto);
@@ -1567,10 +1583,10 @@ $$('[data-logo]').forEach(el=>{const L=LOGOS[el.dataset.logo];el.setAttribute('v
 })();
 // markets
 (function(){
-  const GEO={AU:{id:'036',n:'Australia',b:['LEON']},NZ:{id:'554',n:'New Zealand',b:['LEON']},PT:{id:'620',n:'Portugal',b:['LEON','TWIN','SLOTT']},GR:{id:'300',n:'Greece',b:['LEON','TWIN']},
+  const GEO={AU:{id:'036',n:'Australia',b:['LEON','TWIN']},NZ:{id:'554',n:'New Zealand',b:['LEON']},PT:{id:'620',n:'Portugal',b:['LEON','TWIN','SLOTT']},GR:{id:'300',n:'Greece',b:['LEON','TWIN']},
     BR:{id:'076',n:'Brazil',b:['LEON']},PL:{id:'616',n:'Poland',b:['LEON']},DE:{id:'276',n:'Germany',b:['LEON','TWIN','SLOTT']},TR:{id:'792',n:'Turkey',b:['LEON']},
     TZ:{id:'834',n:'Tanzania',b:['LEON']},RU:{id:'643',n:'Russia',b:['LEON','TWIN','SLOTT']},IT:{id:'380',n:'Italy',b:['LEON','SLOTT']}};
-  const ROWS=[['LEON','leon',['AU','NZ','PT','GR','BR','PL','DE','TR','TZ','RU','IT']],['TWIN','twin',['PT','GR','RU','DE']],['SLOTT','slott',['IT','PT','DE','RU']]];
+  const ROWS=[['LEON','leon',['AU','NZ','PT','GR','BR','PL','DE','TR','TZ','RU','IT']],['TWIN','twin',['PT','GR','DE','AU','RU']],['SLOTT','slott',['IT','PT','DE','RU']]];
   const byId={};Object.entries(GEO).forEach(([c,v])=>byId[v.id]=c);
   let brand='All',hover=null,sel=null;
   const active=c=>c&&GEO[c]&&(brand==='All'||GEO[c].b.includes(brand));
@@ -1606,7 +1622,8 @@ $$('[data-logo]').forEach(el=>{const L=LOGOS[el.dataset.logo];el.setAttribute('v
   const gridG=svg.append('g').attr('class','bgridG');for(let x=0;x<=VW;x+=25)gridG.append('line').attr('class','bgrid'+(x%100?'':' major')).attr('x1',x).attr('x2',x).attr('y1',0).attr('y2',VH);for(let y=0;y<=VH;y+=25)gridG.append('line').attr('class','bgrid'+(y%100?'':' major')).attr('x1',0).attr('x2',VW).attr('y1',y).attr('y2',y);
   if(0)svg.append('rect').attr('class','frame').attr('x',1).attr('y',1).attr('width',VW-2).attr('height',VH-2).attr('rx',14);
   if(0)for(const [x,y,dx,dy] of [[1,1,1,1],[VW-1,1,-1,1],[1,VH-1,1,-1],[VW-1,VH-1,-1,-1]]){svg.append('path').attr('class','tick').attr('fill','none').attr('d','M'+x+' '+(y+dy*26)+'V'+y+'H'+(x+dx*26))}
-  [['N 55.75 / E 37.61',14,22],['GEO // 11 ACTIVE',14,VH-12]].forEach(([t,x,y])=>svg.append('text').attr('class','coord').attr('x',x).attr('y',y).text(t));
+  svg.append('text').attr('class','coord').attr('x',14).attr('y',22).text('N 55.75 / E 37.61');
+  const geoCount=svg.append('text').attr('class','coord').attr('x',14).attr('y',VH-12); // "GEO // N ACTIVE" follows the brand filter
   const baseG=svg.append('g').attr('class','ext ext-base');
   const ctys=svg.append('g').selectAll('path').data(land).join('path').attr('d',path)
     .attr('class',d=>'cty'+(byId[d.id]?' geo':'')).attr('data-c',d=>byId[d.id]||null);
@@ -1642,7 +1659,7 @@ $$('[data-logo]').forEach(el=>{const L=LOGOS[el.dataset.logo];el.setAttribute('v
   function draw(){
     // hovered or selected market is lifted, the other markets fade to the dotted look
     const f=active(hover)?hover:active(sel)?sel:null;
-    drawLayers();lift(f);svg.classed('focus',!!f);
+    drawLayers();lift(f);svg.classed('focus',!!f);geoCount.text('GEO // '+Object.keys(GEO).filter(active).length+' ACTIVE');
     ctys.classed('on',d=>active(byId[d.id])).classed('hi',d=>isHi(byId[d.id]));
     pins.classed('off',c=>!active(c)).classed('hi',isHi).attr('tabindex',c=>active(c)?0:-1);
     pins.filter(isHi).raise();
@@ -1674,12 +1691,16 @@ $$('[data-logo]').forEach(el=>{const L=LOGOS[el.dataset.logo];el.setAttribute('v
   window.__mapDraw=draw;window.__mapSelect=select;window.__mapHover=c=>c?hoverIn(c):hoverOut();
   }
 })();
-// promo video: its files load only when the block comes near the screen, and it plays only while visible
-(function(){const v=document.getElementById('matVideo');if(!v)return;let loaded=false;
+// promo video: its files load only when the block comes near the screen, and it plays only while visible.
+// Light mode (phones, data saver, slow connection, reduced motion): a still of the last (English) scene instead of the video.
+(function(){const v=document.getElementById('matVideo');if(!v)return;
+  const net=navigator.connection||{};
+  if(matchMedia('(max-width:640px),(prefers-reduced-motion:reduce)').matches||net.saveData||/2g|3g/.test(net.effectiveType||'')){
+    const im=new Image();im.loading='lazy';im.decoding='async';im.alt=v.getAttribute('aria-label');im.src=v.dataset.poster;v.replaceWith(im);return}
+  let loaded=false;
   new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){if(!loaded){loaded=true;v.poster=v.dataset.poster;v.querySelectorAll('source[data-src]').forEach(s=>{s.src=s.dataset.src});v.load()}v.play().catch(()=>{})}else if(loaded)v.pause()}),{rootMargin:'600px 0px'}).observe(v)})();
-// contacts copy + form
-(function(){const msg=$('#copyMsg');const copy=t=>{const done=()=>{msg.textContent='Copied: '+t;setTimeout(()=>msg.textContent='',2200)};try{navigator.clipboard.writeText(t).then(done,()=>{msg.textContent=t})}catch(e){msg.textContent=t}};
-  $$('[data-copy]').forEach(b=>b.onclick=()=>copy(b.dataset.copy));
+// contacts form
+(function(){
   $$('.topic').forEach(b=>b.onclick=()=>$$('.topic').forEach(x=>x.setAttribute('aria-pressed',x===b)));
   const f=$('#ctForm');f.onsubmit=e=>{e.preventDefault();let ok=true;['name','email'].forEach(n=>{const i=f.elements[n];const bad=!i.value.trim()||(n==='email'&&!/^\S+@\S+\.\S+$/.test(i.value));i.classList.toggle('bad',bad);if(bad)ok=false});
     $('#ctOk').textContent=ok?'Thanks! Our team will get back to you shortly.':'Please fill in your name and a valid email.';if(ok)f.reset()}})();
